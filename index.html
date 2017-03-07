@@ -5,12 +5,16 @@
 	<title>百度云盘</title>
 	<link rel="stylesheet" href="css/style.css">
 	<!-- <script src="js/index.js"></script> -->
+	<script src="js/index1.0.js"></script>
 </head>
 <body>
+	<!-- header -->
 	<header class="head clearfix">
+		<!-- logo -->
 		<h1 class="logo fl">
 			<a href=""></a>
 		</h1>
+		<!-- head右侧 -->
 		<div class="hd_right fr">
 			<a class="user fl">
 				<span class="img_wrap fl">
@@ -21,11 +25,16 @@
 			</a>
 		</div>	
 	</header>
+	<!-- content -->
 	<section class="content">
+		<!-- side -->
 		<div class="side">
+			<!-- 文件类型 -->
 			<ul class="type">
+				<!-- all -->
 				<li class="type_li type_all">
 					<a class="active" href="javascript:;"><i></i>全部文件</a>
+					<!-- catalog tree -->
 					<ul class="toc_wrap">
 						<li>
 							<a href="javascript:;"><i></i>新建文件夹</a>
@@ -39,18 +48,23 @@
 						</li>
 					</ul>
 				</li>
+				<!-- img -->
 				<li class="type_li type_img">
 					<a href="javascript:;"><i></i>图片</a>
 				</li>
+				<!-- music -->
 				<li class="type_li type_music">
 					<a href="javascript:;"><i></i>音乐</a>
 				</li>
+				<!-- other -->
 				<li class="type_li type_other">
 					<a href="javascript:;"><i></i>其他</a>
 				</li>
 			</ul>
 		</div>
+		<!-- main -->
 		<div class="main">
+			<!-- 文件操作 -->
 			<header class="main_hd clearfix">
 				<div class="file_opt fl">
 					<a class="opt_new fl" href="javascript:;">新建文件夹</a>
@@ -73,11 +87,13 @@
 								<li>修改日期</li>
 							</ul>
 						</div>
-						<div class="view_opt view_list fl"></div>
+						<div class="view_opt view_list active fl"></div>
 					</div>
 				</div>
 			</header>
+			<!-- 文件信息 -->
 			<div class="main_con">
+				<!-- 导航 -->
 				<div class="info clearfix">
 					<div class="local fl">
 						<a class="back" href="javascript:;">返回上一级</a>
@@ -86,6 +102,7 @@
 					</div>
 					<div class="load fr">已全部加载，共1项</div>
 				</div>
+				<!-- 选项 -->
 				<div class="sel_col">
 					<div class="fl sel_all">
 						<span class="checkbox"></span>全选
@@ -95,6 +112,7 @@
 						<span class="sel_time fr">时间</span>
 					</div>
 				</div>
+				<!-- 文件主体 -->
 				<div class="folder_wrap">
 					<ul class="clearfix act_list1">
 						<li>
@@ -110,7 +128,6 @@
 						</li>
 					</ul>
 				</div>
-					
 			</div>
 		</div>
 	</section>
