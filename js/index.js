@@ -68,8 +68,10 @@ window.onload = function (){
 			if (arr[i].idp == id_){		//查找该id下的子集（通过idp查找 idp==id 则该对象是该id下的子集）
 				var li = document.createElement('li');	//生成dom
 				var a = document.createElement('a');
+				var i_ = document.createElement('i');	//文件夹图标
 				a.innerHTML = arr[i].title;
 				a.href = 'javascript:;';
+				a.appendChild(i_);
 				li.appendChild(a);
 				li.id_ = arr[i].id;						//设置li的自定义属性id
 				toc.appendChild(li);

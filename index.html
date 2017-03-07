@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>百度云盘</title>
 	<link rel="stylesheet" href="css/style.css">
-	<script src="js/index.js"></script>
+	<!-- <script src="js/index.js"></script> -->
 </head>
 <body>
 	<header class="head clearfix">
@@ -23,51 +23,57 @@
 	</header>
 	<section class="content">
 		<div class="side">
-			<dl class="type">
-				<dt>
-					<a href="javascript:;">全部文件</a>
+			<ul class="type">
+				<li class="type_li type_all">
+					<a class="active" href="javascript:;"><i></i>全部文件</a>
 					<ul class="toc_wrap">
-						<!-- <li>
-							<a href="javascript:;">新建文件夹</a>
+						<li>
+							<a href="javascript:;"><i></i>新建文件夹</a>
 						</li>
 						<li>
-							<a href="javascript:;">我的游戏</a>
+							<a class="active"n href="javascript:;"><i></i>我的游戏</a>
 							<ul>
-								<li><a href="javascript:;">守望先锋</a></li>
-								<li><a href="javascript:;">守望屁股</a></li>
+								<li><a href="javascript:;"><i></i>守望先锋</a></li>
+								<li><a href="javascript:;"><i></i>守望屁股</a></li>
 							</ul>
-						</li> -->
+						</li>
 					</ul>
-				</dt>
-				<dd>图片</dd>
-				<dd>音乐</dd>
-				<dd>其他</dd>
-			</dl>
+				</li>
+				<li class="type_li type_img">
+					<a href="javascript:;"><i></i>图片</a>
+				</li>
+				<li class="type_li type_music">
+					<a href="javascript:;"><i></i>音乐</a>
+				</li>
+				<li class="type_li type_other">
+					<a href="javascript:;"><i></i>其他</a>
+				</li>
+			</ul>
 		</div>
 		<div class="main">
 			<header class="main_hd clearfix">
-				<div class="m_hd_left fl">
-					<a class="set_floder fl" href="javascript:;">新建文件夹</a>
-					<div class="opt_floder fl">
+				<div class="file_opt fl">
+					<a class="opt_new fl" href="javascript:;">新建文件夹</a>
+					<div class="opt_other fl">
 						<a class="fl" href="javascript:;">删除</a>
 						<a class="fl" href="javascript:;">重命名</a>
 						<a class="fl" href="javascript:;">复制</a>
 						<a class="fl" href="javascript:;">移动到</a>
 					</div>
 				</div>
-				<div class="m_hd_right fr">
+				<div class="file_view fr">
 					<form action="" class="fl">
-						<input type="text" class="search" placeholder="输入你想查找的文件">
+						<input type="text" placeholder="输入你想查找的文件">
 					</form>
 					<div class="view fl">
-						<div class="view_opt order fl">
+						<div class="view_opt view_order fl">
 							<ul class="orderOpt">
 								<li>文件名</li>
 								<li>大小</li>
 								<li>修改日期</li>
 							</ul>
 						</div>
-						<div class="view_opt list fl"></div>
+						<div class="view_opt view_list fl"></div>
 					</div>
 				</div>
 			</header>
@@ -80,23 +86,28 @@
 					</div>
 					<div class="load fr">已全部加载，共1项</div>
 				</div>
-				<div class="all_sel">
-					<span class="checkbox"></span>全选
+				<div class="sel_col">
+					<div class="fl sel_all">
+						<span class="checkbox"></span>全选
+					</div>
+					<div class="fl sel_other">
+						<span class="sel_size">大小</span>
+						<span class="sel_time fr">时间</span>
+					</div>
 				</div>
-				<div class="floder_wrap">
-					<ul class="clearfix act_list">
-						<!-- <li>
-							<div class="fld_name">
+				<div class="folder_wrap">
+					<ul class="clearfix act_list1">
+						<li>
+							<div class="fld_info">
 								<i class="checkbox"></i>
 								<span class="fld_img"></span>
-								<a>新建文件夹</a>
+								<a class="fld_name" href="javascript:;">新建文件夹</a>
 							</div>
-							<div class="more">
+							<div class="fld_more">
 								<span>-</span>
 								<time>2017-03-06</time>
 							</div>
-							
-						</li> -->
+						</li>
 					</ul>
 				</div>
 					
