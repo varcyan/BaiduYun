@@ -39,7 +39,9 @@ html,body {
 }
 body {
 	font: 14px 'Microsoft Yahei';
-	overflow: hidden;
+	overflow-y: hidden;
+	min-width: 1080px;
+	overflow-x: auto;
 }
 input {
 	font: 14px 'Microsoft Yahei';
@@ -91,7 +93,7 @@ input {
 	position: absolute;
 	top: 62px;
 	left: 0;
-	width: 200px;
+	width: 214px;
 	height: 100%;
 	background-color: #eff4f8;
 }
@@ -103,17 +105,31 @@ input {
 .side .type {
 	padding-top: 10px;
 }
+.side .type a{
+	color: #333;
+}
 .side .type dt {
 	background-color: #e4e9ec;
 	color: #4e97ff;
 }
-.side .type dt, .side .type dd {
+.side .type dt a{
+	line-height: 45px;
+	text-indent: 54px;
+	display: block;
+}
+.side .type dt ul a{
+	line-height: 32px;
+}
+.side .type dt ul{
+	padding-left: 15px;
+}
+.side .type dd {
 	height: 45px;
 	line-height: 45px;
 	text-indent: 54px;
 }
 .content .main {
-	margin-left: 200px;
+	margin-left: 214px;
 	border: 1px solid #d8dfea;
 	background-color: #fff;
 }
