@@ -103,68 +103,47 @@ input {
 	height: 100%;
 	border-radius: 8px;
 }
-.side .type {
+.side .toc {
 	padding-top: 10px;
 }
-.toc_wrap a{
-	text-indent: 26px;
-	line-height: 32px;
-}
-.type_li a{
+.toc > li > a {
 	position: relative;
 	display: block;
-	color: #333;
-	white-space: nowrap;
-}
-.type ul{
-	padding-left: 36px;
-}
-.type a:hover{
-	color: #3e8eff;
-}
-.type_all a i{
-	position: absolute;
-	left: 0;
-	top: 4px;
-	width: 22px;
-	height: 22px;
-	background: url(../img/folder_opt.png) no-repeat 0 0/auto 100%;
-}
-.toc_wrap a{
-	padding-left: 10px;
-}
-.type_li > a{
-	text-indent: 56px;
 	line-height: 40px;
+	/*padding-left: 30px;*/
 }
-.type_li > a.active{
+.toc > li > a i{
+	margin-top: 8px;
+}
+.toc a{
+	position: relative;
+	display: block;
+	line-height: 34px;
+	color: #333;
+}
+/* .toc ul{
+	display: none;
+}
+.toc ul.active{
+	display: block;
+} */
+.toc a.select,.toc a:hover{
 	background-color: #e4e9ec;
-}
-.type_li > a:hover{
-	background-color: #e4e9ec;
-}
-.type_li > a i{
-	left: 20px;
-	top: 8px;
-}
-.toc_wrap a.active{
 	color: #3e8eff;
 }
-.type_all a.active i{
+.toc a.active i{
 	background-position: -22px 0;
 }
-.type_all > a i{
-	background: url(../img/folder_opt.png) no-repeat 0 0/auto 100%;
+.toc a i{
+	float: left;
+	width: 22px;
+	height: 22px;
+	margin-top: 5px;
+	margin-right: 10px;
+	background: url(../img/folder_onOff.png) no-repeat 0 0/auto 100%;
 }
-/*
-.type_img > a i{
-	background: url(../img/folder_img.png) no-repeat 0 0/auto 100%;
-}
-.type_music > a i{
-	background: url(../img/folder_music.png) no-repeat 0 0/auto 100%;
-}
-.type_other > a i{
-	background: url(../img/folder_other.png) no-repeat 0 0/auto 100%;
+/* .toc ul a{
+	padding-left: 50px;
 } */
 .content .main {
 	margin-left: 214px;
@@ -213,10 +192,10 @@ input {
 .file_view .view_list{
 	width: 32px;
 	height: 32px;
-	background: url(../img/view_list.png) no-repeat center/auto 26px;
+	background: url(../img/view_list.png) no-repeat 0 center/auto 100%;
 }
 .file_view .view div.active{
-	background-position: -25px center;
+	background-position: -32px center;
 }
 .file_view input{
 	height: 32px;
@@ -270,6 +249,17 @@ input {
 	background-color: #ddd;
 	margin: 0 3px;
 }
+.local .local_info a:not(:last-child):after{
+	content: '>';
+	display: inline-block;
+	vertical-align: bottom;
+	font-family: '仿宋';
+	margin: 0 5px;
+	color: #333;
+}
+.local .local_info a:last-child{
+	color: #333;
+}
 .main_con .sel_col{
 	padding-left: 15px;
 	font-size: 12px;
@@ -293,10 +283,9 @@ input {
 }
 .sel_col .sel_other{
 	width: 40%;
-	display: none;
 }
 .sel_col div.active{
-	display: block;
+	display: none;
 }
 .sel_other .sel_time{
 	width: 60%;

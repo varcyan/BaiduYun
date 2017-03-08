@@ -5,7 +5,6 @@
 	<title>百度云盘</title>
 	<link rel="stylesheet" href="css/style.css">
 	<!-- <script src="js/index.js"></script> -->
-	<script src="js/index1.0.js"></script>
 </head>
 <body>
 	<!-- header -->
@@ -29,37 +28,23 @@
 	<section class="content">
 		<!-- side -->
 		<div class="side">
-			<!-- 文件类型 -->
-			<ul class="type">
-				<!-- all -->
-				<li class="type_li type_all">
-					<a class="active" href="javascript:;"><i></i>全部文件</a>
-					<!-- catalog tree -->
-					<ul class="toc_wrap">
+			<!-- 目录树 -->
+			<ul class="toc">
+				<!-- <li>
+					<a href="javascript:;"><i></i>全部文件</a>
+					<ul>
 						<li>
 							<a href="javascript:;"><i></i>新建文件夹</a>
 						</li>
 						<li>
-							<a class="active"n href="javascript:;"><i></i>我的游戏</a>
+							<a href="javascript:;"><i></i>我的游戏</a>
 							<ul>
 								<li><a href="javascript:;"><i></i>守望先锋</a></li>
 								<li><a href="javascript:;"><i></i>守望屁股</a></li>
 							</ul>
 						</li>
 					</ul>
-				</li>
-				<!-- img -->
-				<li class="type_li type_img">
-					<a href="javascript:;"><i></i>图片</a>
-				</li>
-				<!-- music -->
-				<li class="type_li type_music">
-					<a href="javascript:;"><i></i>音乐</a>
-				</li>
-				<!-- other -->
-				<li class="type_li type_other">
-					<a href="javascript:;"><i></i>其他</a>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		<!-- main -->
@@ -96,9 +81,10 @@
 				<!-- 导航 -->
 				<div class="info clearfix">
 					<div class="local fl">
-						<a class="back" href="javascript:;">返回上一级</a>
-						<a href="javascript:;">全部文件</a>
-						<i>></i>Miaov
+						<a class="back fl" href="javascript:;">返回上一级</a>
+						<div class="local_info fl"></div>
+						<!-- <a href="javascript:;">全部文件</a> -->
+						<!-- <i>></i>Miaov -->
 					</div>
 					<div class="load fr">已全部加载，共1项</div>
 				</div>
@@ -115,7 +101,7 @@
 				<!-- 文件主体 -->
 				<div class="folder_wrap">
 					<ul class="clearfix act_list1">
-						<li>
+						<!-- <li>
 							<div class="fld_info">
 								<i class="checkbox"></i>
 								<span class="fld_img"></span>
@@ -125,11 +111,15 @@
 								<span>-</span>
 								<time>2017-03-06</time>
 							</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
 		</div>
 	</section>
 </body>
+<script src="js/tools.js"></script>
+<script src="js/data.js"></script>
+<script src="js/index1.0.js"></script>
+
 </html>
