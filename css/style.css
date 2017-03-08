@@ -120,6 +120,7 @@ input {
 	display: block;
 	line-height: 34px;
 	color: #333;
+	white-space: nowrap;
 }
 /* .toc ul{
 	display: none;
@@ -131,11 +132,13 @@ input {
 	background-color: #e4e9ec;
 	color: #3e8eff;
 }
-.toc a.active i{
+.toc a.select i{
 	background-position: -22px 0;
 }
 .toc a i{
-	float: left;
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 22px;
 	height: 22px;
 	margin-top: 5px;

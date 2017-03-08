@@ -4,16 +4,20 @@ var folders = document.querySelector('.folder_wrap ul');	//文件夹wrap
 var viewList = document.querySelector('.view .view_list');	//展示方式
 var local = document.querySelector('.local .local_info');	//路径栏
 var back = document.querySelector('.local .back');			//返回上一级
+var newFld = document.querySelector('.file_opt .opt_new');
+
+// 数据中的最大id
+var maxId = maxDataId(data);
+
 
 
 //生成目录树-------------------------------------------
-var left = 10;
-creTree(data,toc);
+var left = 46;
 function creTree(data, wrap){
+	toc.innerHTML = '';
 	data.forEach(function (item){	//数组中的每个项目循环
 		//生成DOM
 		var li_ = document.createElement('li');
-		li_.classList.add('type_li');
 		var a_ = document.createElement('a');
 		a_.id_ = item.id;
 		a_.href = 'javascript:;'
@@ -21,8 +25,9 @@ function creTree(data, wrap){
 		var i_ = document.createElement('i');
 		a_.appendChild(i_);
 		a_.style['padding-left'] = left + 'px';		//设置相应的left值
+		i_.style['left'] = (left-25) + 'px';
 		li_.appendChild(a_);
-		if (item.child){				//判断该目录下是否有子集
+		if (item.child.length){				//判断该目录下是否有子集
 			left += 25;					//位于内层的需要增加left值
 			var ul_ = document.createElement('ul');
 			li_.appendChild(ul_);
@@ -37,40 +42,9 @@ function creTree(data, wrap){
 		wrap.appendChild(li_);
 	})
 }
-//目录点击事件
-function catalogOn(){
-	var as = document.querySelectorAll('.toc a');
-	Array.from(as).forEach(function (item){
-		item.onclick = function (){
-			for (var i=0; i<as.length; i++) {
-				as[i].classList.remove('select');
-			}
-			var next = this.nextElementSibling;
-			var ppar = this.parentNode.parentNode;
-			var allUl = ppar.querySelectorAll('ul');
-			for (var i=0; i<allUl.length; i++) {
-				if (allUl[i] != next) {
-					allUl[i].classList.remove('active');
-					for (j=0; j<as.length; j++){
-						as[j].classList.remove('active');
-					}	
-				}
-			}
-
-			if (next){
-				next.classList.toggle('active');
-			}
-			item.classList.toggle('active');
-			item.classList.toggle('select');			
-			fileOn(item.id_);
-		}
-	})
-}
-catalogOn();
 
 
 //生成文件夹------------------------------------------
-creFiles(data, 0);
 function creFiles(data, id){		//生成文件夹
 	folders.innerHTML = '';
 	var arr = creFilesData(data,id);
@@ -117,7 +91,62 @@ function creFilesData(data, id){
 	return arr;							//数据作为结果返回
 }
 
-//地址---------------------------------------
+// 进入（生成对应id下的）文件夹并关联地址栏、目录位置-----------------------------------------
+function fileOn(thisId_){		//每个文件夹的点击事件
+	creLocal(data,thisId_);	//更新地址栏
+	treeSel(data,thisId_);	//更新目录树选择
+	var child = childById(data, thisId_);	//判断其有没有子元素
+	if(child.length){					//有子集就生成
+		creFiles(data, thisId_);	//重新绘制文件夹
+		creTree(data, toc);			//重新绘制目录树
+		treeSel(data,thisId_);		//重新设定刚刚选择的目录树
+	}else{						//没有就清空内容
+		folders.innerHTML = '该文件夹内没有文件';
+	}
+	folders.id_ = thisId_;
+	console.log(folders.id_);
+}
+fileOn(0);
+
+
+
+//目录树的select-------------
+//目录树目录选中
+function treeSel(data, id){
+	var aAll = document.querySelectorAll('.toc a');
+	console.log(id);
+	for(var i=0; i<aAll.length; i++){			//清空所有的选择
+		if(aAll[i].id_ == id){					//为选择的目录树设置样式
+			console.log(aAll[i]);
+			aAll[i].classList.add('select');
+			continue;
+			console.log(aAll[i]);
+		}
+		aAll[i].classList.remove('select');
+	}
+}
+
+//新建文件夹------------------------------------------
+newFld.onclick = function (){
+	newData(data, folders.id_);
+	fileOn(folders.id_);
+}
+function newData(data,id){
+	var obj = {
+		title: '新建文件夹',
+		id: ++maxId,
+		pid : id,
+		child : []
+	}
+	objById(data,id).child.push(obj);
+	console.log(data);
+}
+
+
+
+
+
+//地址----------------------------------------------------
 //生成地址
 function creLocal(data,id){
 	local.innerHTML = '';				//清空当前内容
@@ -139,7 +168,6 @@ function creLocal(data,id){
 		}
 	}
 }
-creLocal(data,0);
 
 //返回上一级
 back.onclick = function (){
@@ -147,22 +175,6 @@ back.onclick = function (){
 	fileOn(back.id_);
 }
 
-
-
-
-
-
-// 进入文件夹-----------------------------------------
-function fileOn(thisId_){		//每个文件夹的点击事件
-	creLocal(data,thisId_);	//更新地址栏
-	var child = childById(data, thisId_);	//判断其有没有子元素
-	if(child){					//有子集就生成
-		creFiles(data, thisId_);
-
-	}else{						//没有就清空内容
-		folders.innerHTML = '该文件夹内没有文件';
-	}
-}
 
 
 

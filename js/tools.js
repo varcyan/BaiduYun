@@ -1,4 +1,4 @@
-//tools-----------------------------------------------
+//tools
 //根据id找到对应id所在的对象
 function objById(data, id){
 	var obj = null;
@@ -17,7 +17,6 @@ function objById(data, id){
 	}
 	return obj;
 }
-// console.log(objById(data,7));
 
 // 根据id找到对应id对象的子集（如果存在）
 function childById(data, id){
@@ -27,7 +26,6 @@ function childById(data, id){
 		return target.child;
 	}
 }
-// console.log(childById(data,2));
 
 // 根据id获取自己以及自己所有的父级
 function parentById(data, id){
@@ -39,4 +37,22 @@ function parentById(data, id){
 	}
 	return parArr;
 }
-// console.log(parentById(data,5));
+
+
+
+//找到data中最大的id-----------------------------
+function maxDataId(data){
+	var idArr = [];		//声明一个数组用于存放data数据中所有的id
+	function get(data){
+		for(var i=0; i<data.length; i++){
+			idArr.push(data[i].id);
+			if (data[i].child.length) {
+				get(data[i].child);
+			}
+		}
+		return Math.max(...idArr);
+	}
+	return get(data);
+	
+}
+// console.log(maxDataId(data));

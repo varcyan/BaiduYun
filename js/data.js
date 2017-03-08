@@ -18,12 +18,14 @@ var data = [
 							{
 								title: 'D.VA',
 								id: 3,
-								pid: 2
+								pid: 2,
+								child: []
 							},
 							{
 								title: '安娜',
 								id: 4,
-								pid: 2
+								pid: 2,
+								child: []
 							}
 						]
 					},
@@ -35,12 +37,14 @@ var data = [
 							{
 								title: '韩信',
 								id: 6,
-								pid: 5
+								pid: 5,
+								child: []
 							},
 							{
 								title: '貂蝉',
 								id: 7,
-								pid: 5
+								pid: 5,
+								child: []
 							}
 						]
 					}
@@ -54,17 +58,26 @@ var data = [
 					{
 						title: '古风',
 						id: 9,
-						pid: 8
+						pid: 8,
+						child: []
 					},
 					{
 						title: '漫',
 						id: 10,
-						pid: 8
+						pid: 8,
+						child: []
 					},
 					{
 						title: '轻音',
 						id: 11,
-						pid: 8
+						pid: 8,
+						child: []
+					},
+					{
+						title: 'BUFF',
+						id: 12,
+						pid: 8,
+						child: []
 					}
 				]
 			}
