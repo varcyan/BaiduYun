@@ -20,6 +20,7 @@ input {
 	border: none;
 	border-radius: 16px;
 	outline: none;
+	padding: 0;
 }
 /* tools */
 .fl {
@@ -299,17 +300,21 @@ input {
 	margin-top: 10px;
 }
 .folder_wrap{
+	position: relative;
 	height: calc(100% - 61px);
 	overflow:auto;
 	border-top: 1px solid #f2f6fd;
 	font-size:12px;
 }
 .folder_wrap ul{
+	position: relative;
 	/*float: left;*/
 	/*width: calc(100% - 25px);*/
 }
 .folder_wrap ul li a{
 	color: #333;
+	height: 26px;
+	line-height: 26px;
 }
 .folder_wrap ul li a:hover{
 	color: #3e8eff;
@@ -333,7 +338,7 @@ input {
 }
 .act_list0 li .fld_img{
 	display: block;
-	margin: 20px auto;
+	margin: 20px auto 16px;
 	width: 56px;
 	height: 56px;
 	background: url(../img/folder.png) no-repeat;
@@ -362,6 +367,9 @@ input {
 .act_list0 .fld_info .checkbox:hover{
 	background-color: #3e8eff;
 }
+.act_list0 li a{
+	display: block;
+}
 .act_list1 li{
 	height: 44px;
 	border-bottom: 1px solid #f7f6fb;
@@ -371,6 +379,10 @@ input {
 }
 .act_list1 li span,.act_list1 li a{
 	float: left;
+}
+.act_list1 li a {
+	margin-top: 9px;
+	padding-left: 5px;
 }
 .act_list1 li .fld_img{
 	width: 26px;
@@ -398,4 +410,35 @@ input {
 .act_list1 li time{
 	float: right;
 	width: 60%;
+}
+.cg_name{
+	position: absolute;
+	left: 0;
+	top: 0; 
+	display: none;
+}
+.cg_name form, .cg_name .cg_opt{
+	float: left;
+}
+.cg_name input {
+	width: 90px;
+	height: 24px;
+	padding: 0 5px;
+	border: 1px solid #999;
+	border-radius: 2px;
+	margin-right: 5px;
+	font-size: 12px;
+}
+.cg_opt a{
+	float: left;
+	width: 26px;
+	height: 24px;
+	text-align: center;
+	line-height: 24px;
+	font-family: '仿宋';
+	border: 1px solid #c0d9fe;
+	border-radius: 2px;
+}
+.cg_opt a:not(:last-child){
+	margin-right: 3px;
 }

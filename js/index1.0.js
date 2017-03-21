@@ -5,6 +5,9 @@ var viewList = document.querySelector('.view .view_list');	//展示方式
 var local = document.querySelector('.local .local_info');	//路径栏
 var back = document.querySelector('.local .back');			//返回上一级
 var newFld = document.querySelector('.file_opt .opt_new');
+var changName = document.querySelector('.cg_name');
+var changeInp = changName.querySelector('input');
+var nameOpt = changName.querySelectorAll('a');
 
 // 数据中的最大id
 var maxId = maxDataId(data);
@@ -104,9 +107,9 @@ function fileOn(thisId_){		//每个文件夹的点击事件
 		folders.innerHTML = '该文件夹内没有文件';
 	}
 	folders.id_ = thisId_;
-	console.log(folders.id_);
+	// console.log(folders.id_);
 }
-fileOn(0);
+fileOn(0);		//默认初始位置开始
 
 
 
@@ -114,10 +117,10 @@ fileOn(0);
 //目录树目录选中
 function treeSel(data, id){
 	var aAll = document.querySelectorAll('.toc a');
-	console.log(id);
+	// console.log(id);
 	for(var i=0; i<aAll.length; i++){			//清空所有的选择
 		if(aAll[i].id_ == id){					//为选择的目录树设置样式
-			console.log(aAll[i]);
+			// console.log(aAll[i]);
 			aAll[i].classList.add('select');
 			continue;
 			console.log(aAll[i]);
@@ -130,15 +133,51 @@ function treeSel(data, id){
 newFld.onclick = function (){
 	newData(data, folders.id_);
 	fileOn(folders.id_);
+	var lisA = folders.children[0].querySelector('.fld_name');		//新创建的文件夹
+	// 设置/修改文件夹名字wrap的位置
+	changName.style.display = 'block';
+	changeInp.focus();	//焦点
+	changName.style.left = lisA.offsetLeft + 'px';
+	changName.style.top = lisA.offsetTop + 'px';
+	nameOpt[0].onclick = nameYN;	//点击确认判断名字是否符合规范
+
 }
+// 命名判断
+function nameYN(){		
+	var selfChild = objById(data,folders.id_).child;
+	~function tst(){
+		for (var i=0; i<selfChild.length; i++){
+			if(selfChild[i].title === changeInp.value){	//如果写入的名字与统计文件夹有相同的
+				var selfData = objById(data,selfChild[i].id);	//获取名字相同的這个数据
+				if (!selfData.n){			// 存不存在n  
+					selfData.n = 1;			//不存在则添加n
+				}
+				console.log(selfData);
+				console.log('重名了！');
+				selfChild[0].title = `${changeInp.value}(${selfData.n++})`;	//同名的n++
+				changName.style.display = 'none';
+				fileOn(folders.id_);
+				return;
+			}
+		}
+		selfChild[0].title = changeInp.value;
+		changName.style.display = 'none';
+		fileOn(folders.id_);
+		console.log('okk');
+	}();
+		
+	console.log(selfChild);
+}
+
 function newData(data,id){
+	// var selfData = objById(data,id);
 	var obj = {
 		title: '新建文件夹',
 		id: ++maxId,
 		pid : id,
 		child : []
 	}
-	objById(data,id).child.push(obj);
+	objById(data,id).child.unshift(obj);	//向数据中添加新的文件对象
 	console.log(data);
 }
 
