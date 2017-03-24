@@ -54,10 +54,10 @@
 				<div class="file_opt fl">
 					<a class="opt_new fl" href="javascript:;">新建文件夹</a>
 					<div class="opt_other fl">
-						<a class="fl" href="javascript:;">删除</a>
-						<a class="fl" href="javascript:;">重命名</a>
-						<a class="fl" href="javascript:;">复制</a>
-						<a class="fl" href="javascript:;">移动到</a>
+						<a class="fl opt_del" href="javascript:;">删除</a>
+						<a class="fl opt_rename" href="javascript:;">重命名</a>
+						<a class="fl opt_copy" href="javascript:;">复制</a>
+						<a class="fl opt_move" href="javascript:;">移动到</a>
 					</div>
 				</div>
 				<div class="file_view fr">
@@ -100,7 +100,7 @@
 				</div>
 				<!-- 文件主体 -->
 				<div class="folder_wrap">
-					<ul class="clearfix act_list1">
+					<ul class="folders clearfix act_list1">
 						<!-- <li>
 							<div class="fld_info">
 								<i class="checkbox"></i>
@@ -116,19 +116,48 @@
 					<div class="cg_name">
 						<form action="">
 							<input type="text">
-						</form>
+						</form><!-- 
 						<div class="cg_opt">
 							<a href="javascript:;">√</a>
 							<a href="javascript:;">×</a>
-						</div>
+						</div> -->
 					</div>
+					<ul class="rightMenu">
+						<li>删除</li>
+						<li>重命名</li>
+						<li>复制</li>
+						<li>粘贴</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</section>
+	<div class="tips">命名重复了！</div>
+	<div class="move">
+		<header>
+			<div>选择目录</div>
+		</header>
+		<div class="move_wrap">
+			<ul class="move_toc"></ul>
+		</div>
+		<div class="verify">
+			<form class="conOpt" action="">
+				<input type="button" value="确认">
+				<input type="button" value="取消">
+			</form>	
+		</div>
+	</div>
+	<div class="moveSure">
+		<div class="cover">有重复文件名存在，要覆盖吗</div>
+		<form class="conOpt">
+			<input type="button" value="确认" name="">
+			<input type="button" value="取消" name="">
+		</form>
+	</div>
 </body>
 <script src="js/data.js"></script>
 <script src="js/tools.js"></script>
+<script src="js/TweenMax.js"></script>
 <script src="js/index1.0.js"></script>
 
 </html>
