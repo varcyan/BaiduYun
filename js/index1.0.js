@@ -28,8 +28,6 @@ var cancel = document.querySelector('.verify form input:nth-of-type(2)');		// �
 var moveSure = document.querySelector('.moveSure');	//确认移动
 var moveConfirm = document.querySelector('.moveSure .conOpt input:nth-of-type(1)');
 var moveCancel = document.querySelector('.moveSure .conOpt input:nth-of-type(2)');
-console.log(cancel);
-console.log(tips);
 
 // 数据中的最大id
 var maxId = maxDataId(data);
@@ -40,10 +38,7 @@ var curHtml = [];
 // 文件操作------------------------------------------
 // 删除
 optDel.onclick = function (){
-	console.log(111);
-	console.log(fileSel());
 	if (!fileSel()){
-		console.log(11);
 		tips.innerHTML = '请选择要删除的文件';
 		tipsBlock();
 	} else {
@@ -139,42 +134,40 @@ confirm.onclick =function (){
 			tips.innerHTML = '不能移动到目标文件夹，请重新选择';
 			tipsBlock();
 		}else if (can){
-			var arr = nameMove(moveIndex);
-			console.log(arr);
-			// console.log(reNameArr);
+			var res = nameMove(moveIndex);
 			var target = objById(data,moveToc.tar);
-			var arrData = nameMove(moveIndex)[1];
-			if (arr[0]) {			
+			// 没有重名情况时
+			if (res.t) {			
 				// 删除当前的数据，并在目标文件内创建新的
-				for(var i=arrData.length-1; i>=0; i--){
-					curData.splice(0, 1);
-					target.child.unshift(arrData[i]);
-				}
-				fileOn(folders.id_);
-				creTree(data,toc);	// child.length 为0时没有重新生成因此
-				creTree(data,moveToc);
-
+				move();
 				moveNone();
 				tips.innerHTML = '移动成功';
 				tipsBlock();
-			} else {
+			} else {	// 有重名的情况时
 				moveNone();
 				moveSureBlock();
 				// 确认覆盖移动
 				moveConfirm.onclick = function (){
-					console.log(arrData.length);
-					for (var i=0; i<arrData.length; i++){
-						console.log(objById(data,arrData[i][0].id))/* = arrData[i][1];*/
-						// console.log(arrData[i][1]);
-						curData.splice(0, 1);
-						objById(data,arrData[i][0].id).id = arrData[i][1];
-
+					console.log(res.tar);
+					for (var i=0; i<res.tar.length; i++){
+						target.child.splice(res.tar[i]-i,1);
 					}
-					console.log(arrData);
-					fileOn(folders.id_);
-					creTree(data,toc);	// child.length 为0时没有重新生成因此
-					creTree(data,moveToc);
+					move();
+					moveSureNone();
+					tips.innerHTML = '移动成功';
+					tipsBlock();
 				}
+			}
+			function move(){
+				for(var i=res.move.length-1; i>=0; i--){
+					curData[res.move[i]].pid = target.id;
+					target.child.unshift(curData[res.move[i]]);
+					curData.splice(res.move[i],1);
+				}
+				// 生成新状态
+				fileOn(folders.id_);
+				creTree(data,toc);	// child.length 为0时没有重新生成因此
+				creTree(data,moveToc);
 			}
 		}
 	}
@@ -187,27 +180,34 @@ moveCancel.onclick = function (){
 	tipsBlock();
 }
 function nameMove(moveIndex){
-	var tarChild = childById(data, moveToc.tar);
+	var tarChild = childById(data, moveToc.tar);	//目标文件的子集
 	var moveId = [];
-	var repName = [];
+	var res = {};
+	res.t = true;
+	res.tar = [];
+	res.move = [];
 	var t = true;
 	for(var i=0; i<moveIndex.length; i++){
-		moveId.push(objById(data,curHtml[moveIndex[i]].id_));
+		moveId.push([objById(data,curHtml[moveIndex[i]].id_),moveIndex[i]]);
 	}
 	for(var i=0; i<tarChild.length; i++){
 		for(var j=0; j<moveId.length; j++){
-			if (tarChild[i].title === moveId[j].title) {
+			if (tarChild[i].title === moveId[j][0].title) {
 				console.log('存在重名文件，要移动并覆盖吗');
-				t = false;
-				repName.push([tarChild[i]].concat(moveId.splice(j,1),[j]));	// 把重复的push到数组
+				res.t = false;
+				res.tar.push(i);
+				// res.move.push(moveId[j][1]);
+				// repName.push([tarChild[i]].concat(moveId.splice(j,1),[j]));	// 把重复的push到数组
 			}
 		}
 	}
-	if (repName.length === 0) {
-		repName = moveId;
+	if (!res.move.length){
+		for (var i = 0; i < moveId.length; i++) {
+			res.move[i] = moveId[i][1];
+		}
 	}
-	console.log(repName);
-	return [t,repName,moveId];
+	console.log(res);
+	return res;
 }
 
 

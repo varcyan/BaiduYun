@@ -12,19 +12,14 @@ var data = [
 				pid: 0,
 				child: []
 			},
-			{
-				title: 'BUFF',
-				id: 100,
-				pid: 0,
-				child: []
-			},
+			
 			{
 				title: '我的游戏',
 				id: 1,
 				pid: 0,
 				checked: false,
 				child: [
-					{
+					/*{
 						title: '守望先锋',
 						id: 2,
 						pid: 1,
@@ -67,8 +62,14 @@ var data = [
 								child: []
 							}
 						]
-					}
+					}*/
 				]
+			},
+			{
+				title: 'BUFF',
+				id: 100,
+				pid: 0,
+				child: []
 			},
 			{
 				title: '我的音乐',

@@ -224,6 +224,7 @@ input {
 	font-size: 12px;
 	cursor: pointer;
 	background-color: #fff;
+	display: none;
 }
 .orderOpt li:hover {
 	background-color: #eff4f8;
@@ -460,6 +461,7 @@ input {
 	line-height: 26px;
 	border-radius: 5px;
 	background-color: #fff;
+	display: none;
 }
 .rightMenu li{
 	padding: 0 8px;
