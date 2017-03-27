@@ -19,7 +19,7 @@ var data = [
 				pid: 0,
 				checked: false,
 				child: [
-					/*{
+					{
 						title: '守望先锋',
 						id: 2,
 						pid: 1,
@@ -62,7 +62,7 @@ var data = [
 								child: []
 							}
 						]
-					}*/
+					}
 				]
 			},
 			{

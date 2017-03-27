@@ -1,14 +1,19 @@
 /**
- * 重命名名字一样时有问题
+ * 重命名后数字被删除后有问题
+ * 鼠标画框功能未完善
+ * [移动到..]出现时，其他功能未禁止
  */
 // 获取元素
+var html = document.documentElement;
 var toc = document.querySelector('.toc');					//目录树wrap
+var main = document.querySelector('.folder_wrap');		//main wrap
 var folders = document.querySelector('.folder_wrap ul');	//文件夹wrap
 var viewList = document.querySelector('.view .view_list');	//展示方式
 
 var local = document.querySelector('.local .local_info');		//路径栏
 var back = document.querySelector('.local .back');			//返回上一级
 var selAllCheck = document.querySelector('.sel_all .checkbox');	//全选框
+var fileNum = document.querySelector('.info .load');		//已加载项目数	
 
 var changName = document.querySelector('.cg_name');	//input 重命名
 var changeInp = changName.querySelector('input');
@@ -21,6 +26,7 @@ var optMove = document.querySelector('.opt_other .opt_move');		// 移动到
 
 var tips = document.querySelector('.tips');		//提示
 var move = document.querySelector('.move');		//目录框（移动到）
+var moveHeader = document.querySelector('.move header');
 var moveToc = document.querySelector('.move_toc');	// 目录树（移动到）
 var confirm = document.querySelector('.verify form input:nth-of-type(1)');	// 选择移动到 确认
 var cancel = document.querySelector('.verify form input:nth-of-type(2)');		// 选择移动到 取消
@@ -28,6 +34,8 @@ var cancel = document.querySelector('.verify form input:nth-of-type(2)');		// �
 var moveSure = document.querySelector('.moveSure');	//确认移动
 var moveConfirm = document.querySelector('.moveSure .conOpt input:nth-of-type(1)');
 var moveCancel = document.querySelector('.moveSure .conOpt input:nth-of-type(2)');
+
+var selBox = document.querySelector('.selBox');
 
 // 数据中的最大id
 var maxId = maxDataId(data);
@@ -224,7 +232,8 @@ function canMove(moveIndex){
 	return true;
 }
 cancel.onclick = function (){
-	console.log(1);
+	tips.innerHTML = '取消移动';
+	tipsBlock();
 	moveNone();
 }
 
@@ -243,6 +252,8 @@ function selNum(){
 }
 // tips block
 function tipsBlock(){
+	tips.style.top = '-42px';
+	tips.style.opacity = 0;
 	TweenMax.to(tips, 0.5, {
 		top: 30,
 		opacity: 1,
@@ -250,10 +261,7 @@ function tipsBlock(){
 		onComplete: function (){
 			TweenMax.to(tips, 0.2, {
 				opacity: 0,
-				delay: 1.2,
-				onComplete: function (){
-					tips.style.top = '-42px';
-				}
+				delay: 1.2
 			})
 		}
 	})
@@ -304,8 +312,81 @@ function renameYN(arr){
 	}
 	return true;
 }
-
-
+// 目录拖拽------------------------------------------
+moveHeader.onmousedown = function (e){
+	e.preventDefault();	// 去除浏览器默认事件
+	var x = e.pageX - getRect(move,'left');
+	var y = e.pageY - getRect(move,'top');
+	document.onmousemove = function(e){
+		var l = e.pageX - x - getRect(move.offsetParent, 'left');
+		var t = e.pageY - y - getRect(move.offsetParent, 'top');
+		if (l <= 0) l = 0;
+		if (l >= html.offsetWidth - move.offsetWidth){
+			l = html.offsetWidth - move.offsetWidth
+		}
+		if (t <= 0) t = 0;
+		if (t >= html.offsetHeight - move.offsetHeight){
+			t = html.offsetHeight - move.offsetHeight;
+		}
+		move.style.left = l + 'px';
+		move.style.top = t + 'px';
+	}
+	document.onmouseup = function (e){
+		document.onmousemove = document.onmouseup = null;
+	}
+}
+// 鼠标画框------------------------------------------
+main.onmousedown = function (e){
+	// 如果changeInp显示，首先让其进行失去焦点的的状态
+	if (changName.style.display === 'block') {
+		// 问题： 在wrap中点击时，会执行两次, 因此之让其显示状态为none
+		changeName.style.display = 'none';
+	}
+	// 处理默认事件	
+	e.preventDefault();
+	console.log(e.target);
+	if (e.target.nodeName.toUpperCase() === 'LI' || e.target.classList.contains('fld_info') || e.target.classList.contains('fld_more') || e.target.classList.contains('checkbox') || e.target.classList.contains('fld_img') || e.target.classList.contains('fld_name') || e.target.nodeName.toUpperCase() === 'TIME'){
+		return;
+	} else {
+		// 只有点到文件夹外的时候 才清空全选状态
+		checkOri(false);
+	}
+	var dx = e.pageX - getRect(main,'left');
+	var dy = e.pageY - getRect(main,'top');
+	document.onmousemove = function (e){
+		var mx = e.pageX - getRect(main,'left');
+		var my = e.pageY - getRect(main,'top');
+		if (mx >= main.offsetWidth){
+			mx = main.offsetWidth - 2;
+		}
+		if (my >= main.offsetHeight){
+			my = main.offsetHeight - 4;
+		}
+		selBox.style.width = Math.abs(mx-dx) + 'px';
+		selBox.style.height = Math.abs(my-dy) + 'px';
+		selBox.style.left = Math.min(mx,dx) + 'px';
+		selBox.style.top = Math.min(my,dy) + 'px';
+		selBox.style.display = 'block';
+		for(var i=0; i<curHtml.length; i++){
+			if (duang(selBox, curHtml[i])) {
+				curHtml[i].classList.add('active');
+				curHtml[i].firstElementChild.firstElementChild.innerHTML = '√';
+				objById(data, curHtml[i].id_).checked = true;
+				setCheckAll();
+				/*
+				objById(data, e.target.id_).checked = e.target.parentNode.parentNode.classList.contains('active')? true : false;*/
+			} else {
+				curHtml[i].classList.remove('active');
+				curHtml[i].firstElementChild.firstElementChild.innerHTML = '';
+				objById(data, curHtml[i].id_).checked = false;
+			}
+		}
+	}
+	document.onmouseup = function (){
+		selBox.style.display = '';
+		document.onmousemove = document.onmouseup = null;
+	}
+}
 
 
 //生成目录树-------------------------------------------
@@ -521,6 +602,10 @@ function checkAll(){
 	}
 	return true;
 }
+// 加载项目数
+function allLoad(){
+	fileNum.innerHTML = '已经全部加载，共'+ curData.length +'项'
+}
 
 
 // 进入（生成对应id下的）文件夹并关联地址栏、目录位置-----------------------------------------
@@ -529,6 +614,7 @@ function fileOn(thisId_){		//每个文件夹的点击事件
 	creLocal(data,thisId_);	//更新地址栏
 	treeSel(data,thisId_, toc);	//更新目录树选择
 	treeSel(data,thisId_, moveToc);	//更新目录树选择
+
 	var child = childById(data, thisId_);	//判断其有没有子元素
 	if(child.length){					//有子集就生成
 		creFiles(data, thisId_);	//重新绘制文件夹
@@ -536,10 +622,12 @@ function fileOn(thisId_){		//每个文件夹的点击事件
 		creTree(data, moveToc);
 		treeSel(data,thisId_, toc);		//重新设定刚刚选择的目录树
 		treeSel(data,thisId_, moveToc);		//重新设定刚刚选择的目录树
+		allLoad();
 	}else{						//没有就清空内容
 		folders.innerHTML = '';
 		curData = [];
 		curHtml = [];
+		allLoad();
 	}
 	folders.id_ = thisId_;
 	// console.log(curData);
@@ -592,8 +680,10 @@ newFld.onclick = function (){
 			newData(data, folders.id_,newName);
 			fileOn(folders.id_);
 		} else {
-			folders.removeChild(folders.firstElementChild);
-			console.log('删除');
+			if (!folders.firstElementChild.id_) {
+				folders.removeChild(folders.firstElementChild);
+				console.log('删除');
+			}
 		}
 	}
 	console.log(curData);

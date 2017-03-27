@@ -335,7 +335,7 @@ input {
 }
 .act_list0 li:hover, .act_list0 li.active{
 	background-color: #eee;
-	border-color: pink;
+	border-color: #c0d9fe;
 }
 .act_list0 li .fld_img{
 	display: block;
@@ -486,6 +486,7 @@ input {
 	text-align: center;
 	border-radius: 5px;
 	opacity: 0;
+	z-index: 3;
 }
 .tips.active{
 	display: block;
@@ -498,7 +499,7 @@ input {
 	top: 100px;
 	opacity: 0;
 	display: none;
-	transform: translateX(-50%);
+	/*transform: translateX(-50%);*/
 	border: 1px solid #c0d9fe;
 	background-color: #fff;
 	border-radius: 8px;
@@ -568,4 +569,10 @@ input {
 .moveSure .cover {
 	padding: 20px 15px;
 	text-align: center;
+}
+.selBox{
+	position: absolute;
+	border: 1px solid #c0d9fe;
+	background-color: rgba(0,55,80,.1);
+	display: none;
 }

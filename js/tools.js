@@ -56,3 +56,37 @@ function maxDataId(data){
 	
 }
 // console.log(maxDataId(data));
+
+// 获取某元素某个方向距离body的绝对位置
+function getRect(obj, type){
+	var rect = obj.getBoundingClientRect();
+	switch(type){
+		case 'left':
+			return rect.left;
+			break;
+		case 'top':
+			return rect.top;
+			break;
+		case 'right':
+			return rect.right;
+			break;
+		case 'bottom':
+			return rect.bottom;
+			break;
+	}
+};
+
+// 碰撞检测
+function duang(current, target){
+	var currentRect = current.getBoundingClientRect();
+	var targetRect = target.getBoundingClientRect();
+	var currentLeft = currentRect.left, 
+		currentTop = currentRect.top,
+		currentRight = currentRect.right,
+		currentBottom = currentRect.bottom;
+	var targetLeft = targetRect.left, 
+		targetTop = targetRect.top,
+		targetRight = targetRect.right,
+		targetBottom = targetRect.bottom;
+	return currentRight > targetLeft && currentBottom > targetTop && currentLeft < targetRight && currentTop < targetBottom;
+};
