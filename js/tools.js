@@ -38,8 +38,6 @@ function parentById(data, id){
 	return parArr;
 }
 
-
-
 //找到data中最大的id-----------------------------
 function maxDataId(data){
 	var idArr = [];		//声明一个数组用于存放data数据中所有的id

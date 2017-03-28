@@ -24,6 +24,7 @@ var optRename = document.querySelector('.opt_other .opt_rename');	//重命名
 var optMove = document.querySelector('.opt_other .opt_move');		// 移动到
 
 
+var mask = document.querySelector('.mask');		//遮罩
 var tips = document.querySelector('.tips');		//提示
 var move = document.querySelector('.move');		//目录框（移动到）
 var moveHeader = document.querySelector('.move header');
@@ -59,6 +60,8 @@ optDel.onclick = function (){
 		creTree(data,toc);	// child.length 为0时没有重新生成因此
 		creTree(data,moveToc);
 		fileOn(folders.id_);
+		tips.innerHTML = '删除成功';
+		tipsBlock();
 	}
 }
 // 判断有没有选中文件
@@ -122,6 +125,9 @@ optMove.onclick = function (){
 	if (arr[0] === 0){
 		tips.innerHTML = '请选择要移动的文件';
 		tipsBlock();
+	}else if (arr[0] === curData.length && folders.id_ === 0){
+		tips.innerHTML = '已经位于根节点啦';
+		tipsBlock();
 	} else {
 		moveBlock();
 		moveToc.tar = null;
@@ -153,9 +159,11 @@ confirm.onclick =function (){
 				tipsBlock();
 			} else {	// 有重名的情况时
 				moveNone();
+				mask.style.display = 'block';
 				moveSureBlock();
 				// 确认覆盖移动
 				moveConfirm.onclick = function (){
+					mask.style.display = '';
 					console.log(res.tar);
 					for (var i=0; i<res.tar.length; i++){
 						target.child.splice(res.tar[i]-i,1);
@@ -183,6 +191,7 @@ confirm.onclick =function (){
 
 // 取消移动
 moveCancel.onclick = function (){
+	mask.style.display = '';
 	moveSureNone();
 	tips.innerHTML = '取消移动';
 	tipsBlock();
@@ -245,7 +254,7 @@ function selNum(){
 	for(var i=0; i<curData.length; i++){
 		if (curData[i].checked){
 			++n;
-			m.push(i)	// 存储开着的开关
+			m.push(i)	// 存储开着的开关的索引值
 		}
 	}
 	return [n,m];
@@ -285,13 +294,18 @@ function moveSureNone(){
 }
 // move block
 function moveBlock(){
+	mask.style.display = 'block';
+	move.style.top = '50px';
+	move.style.left = 'calc(50% - 201px)';
 	move.style.display = 'block';
 	TweenMax.to(move, 0.5, {
+		top: 100,
 		opacity: 1
 	})
 }
 // move none
 function moveNone(){
+	mask.style.display = '';
 	TweenMax.to(move, 0.5, {
 		opacity: 0,
 		onComplete: function (){
@@ -340,11 +354,11 @@ main.onmousedown = function (e){
 	// 如果changeInp显示，首先让其进行失去焦点的的状态
 	if (changName.style.display === 'block') {
 		// 问题： 在wrap中点击时，会执行两次, 因此之让其显示状态为none
-		changeName.style.display = 'none';
+		changName.style.display = 'none';
 	}
 	// 处理默认事件	
 	e.preventDefault();
-	console.log(e.target);
+	// console.log(e.target);
 	if (e.target.nodeName.toUpperCase() === 'LI' || e.target.classList.contains('fld_info') || e.target.classList.contains('fld_more') || e.target.classList.contains('checkbox') || e.target.classList.contains('fld_img') || e.target.classList.contains('fld_name') || e.target.nodeName.toUpperCase() === 'TIME'){
 		return;
 	} else {
@@ -686,7 +700,7 @@ newFld.onclick = function (){
 			}
 		}
 	}
-	console.log(curData);
+	// console.log(curData);
 }
 // 命名判断
 function nameYN(){		
@@ -711,10 +725,39 @@ function nameYN(){
 			changeInp.focus();
 		}	
 	})();
+	/*return (function tst(){
+		if (changeInp.value) {
+			var n = 1;
+			var a = nameRe(selfChild, changeInp.value, n);
+			// console.log(a);
+			return a;
+
+		} else {
+			console.log('不能为空');
+			changeInp.focus();
+		}	
+	})();*/
+
 		
 	// console.log(selfChild);
 }
-
+// 新名字是否符合规则
+function nameRe(selfChild,newName, n){
+	// console.log('newName:   ' + newName);
+	for (var i=0; i<selfChild.length; i++){
+		// console.log(selfChild[i].title);
+		if(selfChild[i].title === newName){
+			// console.log('有重名');
+			newName = `${changeInp.value}(${n++})`;
+			console.log(n);
+			console.log(newName);
+			nameRe(selfChild,newName,n);
+			return newName;
+		}
+	}
+	// return newName;
+}
+// 新建数据
 function newData(data,id,newName){
 	var obj = {
 		title: newName,
@@ -722,9 +765,9 @@ function newData(data,id,newName){
 		pid : id,
 		child : []
 	}
-	console.log(obj.title);
+	// console.log(obj.title);
 	objById(data,id).child.unshift(obj);	//向数据中添加新的文件对象
-	console.log(data);
+	// console.log(data);
 }
 
 // input的style
